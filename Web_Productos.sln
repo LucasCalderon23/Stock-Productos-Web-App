@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+<<<<<<< HEAD
+VisualStudioVersion = 17.14.36705.20 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPFinalNivel3_Calderon", "TPFinalNivel3_Calderon\TPFinalNivel3_Calderon.csproj", "{6262025B-A7EA-4280-981F-82052C7EFC3D}"
+EndProject
+=======
+VisualStudioVersion = 17.14.36705.20
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPFinalNivel3_Calderon", "TPFinalNivel3_Calderon\TPFinalNivel3_Calderon.csproj", "{6262025B-A7EA-4280-981F-82052C7EFC3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{907275BC-8B71-430F-935A-9CEAD7B52211}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{441BB75D-B358-497C-BEEF-29EE2B7E7D43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructura", "Infraestructura\Infraestructura.csproj", "{986847BB-5DE8-4E6F-BA6B-6F0C96C82985}"
+EndProject
+>>>>>>> c163aac (Respaldo de todos los archivos locales)
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6262025B-A7EA-4280-981F-82052C7EFC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6262025B-A7EA-4280-981F-82052C7EFC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6262025B-A7EA-4280-981F-82052C7EFC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6262025B-A7EA-4280-981F-82052C7EFC3D}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
+=======
+		{907275BC-8B71-430F-935A-9CEAD7B52211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907275BC-8B71-430F-935A-9CEAD7B52211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907275BC-8B71-430F-935A-9CEAD7B52211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907275BC-8B71-430F-935A-9CEAD7B52211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441BB75D-B358-497C-BEEF-29EE2B7E7D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441BB75D-B358-497C-BEEF-29EE2B7E7D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441BB75D-B358-497C-BEEF-29EE2B7E7D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441BB75D-B358-497C-BEEF-29EE2B7E7D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986847BB-5DE8-4E6F-BA6B-6F0C96C82985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986847BB-5DE8-4E6F-BA6B-6F0C96C82985}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986847BB-5DE8-4E6F-BA6B-6F0C96C82985}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986847BB-5DE8-4E6F-BA6B-6F0C96C82985}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> c163aac (Respaldo de todos los archivos locales)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7F5175E-9D08-40AE-AA78-6E9FE0F9342B}
+	EndGlobalSection
+EndGlobal
