@@ -20,7 +20,7 @@ namespace Negocio
 
         public AccesoDatos()
         {
-            this.Conexion = new SqlConnection("server=LUCAS\\SQLEXPRESS; database=CATALOGO_DB; integrated security=true");
+            this.Conexion = new SqlConnection("server=LUCAS\\SQLEXPRESS; database=CATALOGO_WEB_DB; integrated security=true");
             Comando = new SqlCommand();
         }
 
@@ -38,6 +38,13 @@ namespace Negocio
             }
             
         }
+
+        public void setearProcedimiento(string procedimiento)
+        {
+            Comando.CommandType = System.Data.CommandType.StoredProcedure;
+            Comando.CommandText = procedimiento;
+        }
+
         public void setearParametros(string nombre, object numero)
         {
             Comando.Parameters.AddWithValue(nombre, numero);
@@ -57,6 +64,8 @@ namespace Negocio
                 throw ex;
             }
         }
+
+
 
         public void ejecutarAccion()
         {

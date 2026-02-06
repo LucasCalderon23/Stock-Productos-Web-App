@@ -4,8 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 <<<<<<< HEAD
 VisualStudioVersion = 17.14.36705.20 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPFinalNivel3_Calderon", "TPFinalNivel3_Calderon\TPFinalNivel3_Calderon.csproj", "{6262025B-A7EA-4280-981F-82052C7EFC3D}"
-EndProject
+
 =======
 VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1

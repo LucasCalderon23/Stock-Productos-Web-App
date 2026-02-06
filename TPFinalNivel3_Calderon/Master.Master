@@ -11,6 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
+    <style>
+        body {
+            background: #e9ecef;
+        }
+    </style>
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
             <div class="container-fluid">
@@ -31,11 +36,11 @@
                         <%if (Session["UserActivo"] == null)
                             { %>
                         <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-success" />
-                        <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="btn btn-outline-primary"/>
+                        <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="btn btn-outline-primary" />
                         <%}
                             else
                             { %>
-                        <asp:Button ID="btnMiPerfil" runat="server" Text="Mi Perfil" CssClass="btn btn-outline-light"/>
+                        <asp:Button ID="btnMiPerfil" runat="server" Text="Mi Perfil" CssClass="btn btn-outline-light" />
                         <asp:Label ID="lblUser" runat="server" />
                         <asp:Image ID="imgAvatar" Style="height: 40px; width: 40px; border-radius: 50%;"
                             runat="server" />

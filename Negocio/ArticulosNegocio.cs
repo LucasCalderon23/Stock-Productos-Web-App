@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,42 +13,86 @@ namespace Negocio
     public class ArticulosNegocio
     {
 		AccesoDatos datos = new AccesoDatos();
-        public List<Articulos> listado()
+        public List<Articulos> listado(string id = "")// si escribo asi el paramentro me lo conviente en uno opcional y no obligatorio
         {
+                List<Articulos> lista = new List<Articulos>();
+                SqlConnection connection = new SqlConnection(); //Objeto creado para la conexion a la DB
+                SqlCommand comando = new SqlCommand();//objeto creado para realizar acciones en la conexion que acabamos de declarar
+                SqlDataReader Lector;
+                try
+                {
+                    connection.ConnectionString = "server=LUCAS\\SQLEXPRESS; database=CATALOGO_WEB_DB; integrated security=true"; //atributo del sqlconnection donde indico a donde me voy a conectar
+                    comando.CommandType = System.Data.CommandType.Text;
+                    comando.CommandText = "select a.Id, Codigo, Nombre, a.Descripcion, a.IdMarca, m.Descripcion Marca, a.IdCategoria, c.Descripcion Categoria, ImagenUrl, Precio from ARTICULOS a, MARCAS m, CATEGORIAS c where a.IdMarca = m.Id and a.IdCategoria = c.Id ";
+                    if (id != "")
+                        comando.CommandText += " and a.Id = " + id;
+                    comando.Connection = connection;
+
+                    connection.Open();
+                    Lector = comando.ExecuteReader();
+                    while (Lector.Read())
+                    {
+                        Articulos aux = new Articulos();
+                        aux.Id = (int)Lector["Id"];
+                        aux.Codigo = (string)Lector["Codigo"];
+                        aux.Nombre = (string)Lector["Nombre"];
+                        aux.Descripcion = (string)Lector["Descripcion"];
+                        aux.Marca = new Marca();
+                        aux.Marca.Id = (int)Lector["IdMarca"];
+                        aux.Marca.Descripcion = (string)Lector["Marca"];
+                        aux.Categoria = new Categoria();
+                        aux.Categoria.Id = (int)Lector["IdCategoria"];
+                        aux.Categoria.Descripcion = (string)Lector["Categoria"];
+                        aux.UrlImagen = (string)Lector["ImagenUrl"];
+                        aux.Precio = (decimal)Lector["Precio"];
+
+                        lista.Add(aux);
+                    }
+                    return lista;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    datos.cerrarConexion();
+                }
+        }
+		public List<Articulos> listadoStoredProcedure()
+		{
 			List<Articulos> lista = new List<Articulos>();
+			AccesoDatos datos = new AccesoDatos();
 			try
 			{
-				datos.setearConsulta("select a.Id,Codigo, Nombre, a.Descripcion,a.IdMarca , m.Descripcion Marca,a.Idcategoria,c.Descripcion Categoria, ImagenUrl, Precio from ARTICULOS a, CATEGORIAS c, MARCAS m where a.IdMarca = m.Id and a.IdCategoria = c.Id");
-				datos.ejecutarLectura();
-				while(datos.Lector.Read())
-				{
-					Articulos aux = new Articulos();
-					aux.Id = (int)datos.Lector["Id"];
-					aux.Codigo = (string)datos.Lector["Codigo"];
-					aux.Nombre = (string)datos.Lector["Nombre"];
-					aux.Descripcion = (string)datos.Lector["Descripcion"];
-					aux.Marca = new Marca();
-					aux.Marca.Id = (int)datos.Lector["IdMarca"];
-					aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-					aux.Categoria = new Categoria();
-					aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
-					aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-					aux.UrlImagen = (string)datos.Lector["ImagenUrl"];
-					aux.Precio = (decimal)datos.Lector["Precio"];
+                datos.setearProcedimiento("storedListar");
+                datos.ejecutarLectura();
+                while(datos.Lector.Read())
+                {
+                    Articulos aux = new Articulos();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.UrlImagen = (string)datos.Lector["ImagenUrl"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
 
-					lista.Add(aux);
-				}
-				return lista;
+                    lista.Add(aux);
+                }
+                
+                return lista;
 			}
 			catch (Exception ex)
 			{
 				throw ex;
 			}
-			finally
-			{
-				datos.cerrarConexion();
-			}
-        }
+		}
 
 		public void Agregar(Articulos nuevo)
 		{
@@ -70,7 +115,28 @@ namespace Negocio
 			}
 		}
 
-		public void Modificar(Articulos modificar)
+        public void AgregarConSP(Articulos nuevo)
+        {
+            try
+            {
+                datos.setearProcedimiento("storedAltaArticulo");
+                datos.setearParametros("@Codigo", nuevo.Codigo);
+                datos.setearParametros("@Nombre", nuevo.Nombre);
+                datos.setearParametros("@Descripcion", nuevo.Descripcion);
+                datos.setearParametros("@IdMarca", nuevo.Marca.Id);
+                datos.setearParametros("@IdCategoria", nuevo.Categoria.Id);
+                datos.setearParametros("@ImagenUrl", nuevo.UrlImagen);
+                datos.setearParametros("@Precio", nuevo.Precio);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void Modificar(Articulos modificar)
 		{
 			try
 			{
@@ -92,7 +158,29 @@ namespace Negocio
 			}
 		}
 
-		public void Eliminar(int id)
+        public void ModificarConSP(Articulos modificar)
+        {
+            try
+            {
+                datos.setearProcedimiento("storedModificarArticulo");
+                datos.setearParametros("@Codigo", modificar.Codigo);
+                datos.setearParametros("@Nombre", modificar.Nombre);
+                datos.setearParametros("@Descripcion", modificar.Descripcion);
+                datos.setearParametros("@Idmarca", modificar.Marca.Id);
+                datos.setearParametros("@IdCategoria", modificar.Categoria.Id);
+                datos.setearParametros("@ImagenUrl", modificar.UrlImagen);
+                datos.setearParametros("@Precio", modificar.Precio);
+                datos.setearParametros("@Id", modificar.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void Eliminar(int id)
 		{
 			AccesoDatos datos = new AccesoDatos();
 			try
