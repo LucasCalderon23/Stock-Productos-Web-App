@@ -13,8 +13,17 @@
 <body>
     <style>
         body {
-            background: #e9ecef;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh;
+            color: white;
         }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        
     </style>
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
@@ -28,19 +37,28 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="Default.aspx">Home</a>
                         </li>
+                        <%if (Infraestructura.Seguridad.esAdmin(Session["usuarioActivo"])) { %>
                         <li class="nav-item">
                             <a class="nav-link" href="ListaArticulos.aspx">Lista Articulos</a>
                         </li>
+                        <%}
+
+%>
+                        <%if (Infraestructura.Seguridad.sesionActiva(Session["usuarioActivo"])) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Favoritos.aspx">Favoritos</a>
+                        </li>
+                        <%} %>
                     </ul>
                     <div class="d-flex ms-auto gap-2">
-                        <%if (Session["UserActivo"] == null)
+                        <%if (Session["usuarioActivo"] == null)
                             { %>
-                        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-success" />
-                        <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="btn btn-outline-primary" />
+                        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-success" OnClick="btnLogin_Click" />
+                        <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="btn btn-outline-primary" OnClick="btnRegistrarse_Click" />
                         <%}
                             else
                             { %>
-                        <asp:Button ID="btnMiPerfil" runat="server" Text="Mi Perfil" CssClass="btn btn-outline-light" />
+                        <asp:Button ID="btnMiPerfil" runat="server" Text="Mi Perfil" CssClass="btn btn-outline-light" OnClick="btnMiPerfil_Click" />
                         <asp:Label ID="lblUser" runat="server" />
                         <asp:Image ID="imgAvatar" Style="height: 40px; width: 40px; border-radius: 50%;"
                             runat="server" />

@@ -65,7 +65,19 @@ namespace Negocio
             }
         }
 
-
+        public int ejecutarAccionScalar()
+        {
+            Comando.Connection = Conexion;
+            try
+            {
+                Conexion.Open();
+                return int.Parse(Comando.ExecuteScalar().ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public void ejecutarAccion()
         {

@@ -11,12 +11,14 @@ namespace TPFinalNivel3_Calderon
 {
     public partial class FormularioArticulos : System.Web.UI.Page
     {
+        public bool Confirmacion {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticulosNegocio negocio = new ArticulosNegocio();
             MarcaNegocio marcaNegocio = new MarcaNegocio();
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
             txtId.Enabled = false;
+            Confirmacion = false;
             try
             {
                 if(!IsPostBack)
@@ -104,6 +106,29 @@ namespace TPFinalNivel3_Calderon
             {
                 Session.Add("Error", ex);
                 Response.Redirect("Error.asxp",false);
+            }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Confirmacion = true;
+        }
+
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(ckbConfirmar.Checked)
+                {
+                    ArticulosNegocio negocio = new ArticulosNegocio();
+                    negocio.Eliminar(int.Parse(txtId.Text));
+                    Response.Redirect("ListaArticulos.aspx", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
     }

@@ -203,31 +203,17 @@ namespace Negocio
 			try
 			{
 				string consulta = "select a.Id,Codigo, Nombre, a.Descripcion,a.IdMarca , m.Descripcion Marca,a.Idcategoria,c.Descripcion Categoria, ImagenUrl, Precio from ARTICULOS a, CATEGORIAS c, MARCAS m where a.IdMarca = m.Id and a.IdCategoria = c.Id and ";
-				if (campo == "Codigo")
+				if (campo == "Nombre")
 				{
                     switch (criterio)
                     {
                         case "Comienza con":
-							consulta += "Codigo like '"+ filtro +"%' ";
-                            break;
-                        case "Termina con":
-                            consulta += "Codigo like '%" + filtro + "' ";
-                            break;
-						default:
-                            consulta += "Codigo like '%" + filtro + "%' ";
-                            break;
-                    }
-                }else if (campo == "Nombre")
-				{
-                    switch (criterio)
-                    {
-                        case "Comienza con":
-                            consulta += "Nombre like '" + filtro + "%' ";
+							consulta += "Nombre like '"+ filtro +"%' ";
                             break;
                         case "Termina con":
                             consulta += "Nombre like '%" + filtro + "' ";
                             break;
-                        default:
+						default:
                             consulta += "Nombre like '%" + filtro + "%' ";
                             break;
                     }
@@ -261,7 +247,7 @@ namespace Negocio
                             break;
                     }
                 }
-					datos.setearConsulta(consulta);
+				datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

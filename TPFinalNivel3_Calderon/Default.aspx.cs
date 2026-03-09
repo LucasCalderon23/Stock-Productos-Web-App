@@ -14,8 +14,31 @@ namespace TPFinalNivel3_Calderon
         public List<Articulos> ListaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticulosNegocio negocio = new ArticulosNegocio();
-            ListaArticulos = negocio.listadoStoredProcedure();
+            if (!IsPostBack)
+            {
+                ArticulosNegocio negocio = new ArticulosNegocio();
+                Session["listaArticulos"] = negocio.listadoStoredProcedure();
+            }
+
+            ListaArticulos = (List<Articulos>)Session["listaArticulos"];
         }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            List<Articulos> lista = (List<Articulos>)Session["listaArticulos"];
+
+            string filtro = txtFiltro.Text.ToLower();
+
+            List<Articulos> listaFiltrada = lista.FindAll(x =>
+                x.Nombre.ToLower().Contains(filtro) ||
+                x.Descripcion.ToLower().Contains(filtro) ||
+                x.Marca.Descripcion.ToLower().Contains(filtro) ||
+                x.Categoria.Descripcion.ToLower().Contains(filtro)
+            );
+
+            ListaArticulos = listaFiltrada;
+        }
+
+        
     }
 }

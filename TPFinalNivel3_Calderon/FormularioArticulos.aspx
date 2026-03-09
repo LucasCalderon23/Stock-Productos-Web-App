@@ -4,14 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
-    <%if (Request.QueryString["id"] == null)
-        {%>
-    <h2>Modificar Articulo</h2>
-    <%}
-    else
-    { %>
-    <h2>Agregar Articulo</h2>
-    <%  } %>
+    <h2>Formulario Articulo</h2>
     <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
@@ -53,6 +46,19 @@
                     <asp:Image ImageUrl="https://imgs.search.brave.com/X_N2Y1fS1TO5CbzKSvt1Wsfs7lyyC_oefR6wrHHdPaU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy84/Lzg5L1BvcnRyYWl0/X1BsYWNlaG9sZGVy/LnBuZw"
                         runat="server" CssClass="img-fluid mb-3" ID="imgProducto" />
                     </div>
+                    <%if (Request.QueryString["id"] != null)
+                    { %>
+                    <div class="mb-3">
+                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" class="btn btn-danger" OnClick="btnEliminar_Click" />
+                    </div>
+                    <%if (Confirmacion)
+                        { %>
+                    <div class="mb-3">
+                        <asp:CheckBox Text="Confirmar eliminacion" ID="ckbConfirmar" runat="server" />
+                        <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar" class="btn btn-outline-danger" OnClick="btnConfirmar_Click" />
+                    </div>
+                    <% }%>
+                    <%} %>
                 </ContentTemplate>
             </asp:UpdatePanel>
 
@@ -62,6 +68,5 @@
                     <a href="ListaArticulos.aspx">Regresar</a>
                 </div>
             </div>
-
         </div>
 </asp:Content>
