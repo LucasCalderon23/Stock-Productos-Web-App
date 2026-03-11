@@ -351,5 +351,27 @@ namespace Negocio
             }
             finally { datos.cerrarConexion(); }
         }
+        public bool ExisteFavorito(int idArticulo, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdArticulo FROM FAVORITOS WHERE IdArticulo = @IdArticulo AND IdUser = @IdUser");
+                datos.setearParametros("@IdArticulo", idArticulo);
+                datos.setearParametros("@IdUser", idUsuario);
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

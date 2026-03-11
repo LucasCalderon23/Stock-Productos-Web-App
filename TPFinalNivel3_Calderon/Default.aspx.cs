@@ -28,6 +28,7 @@ namespace TPFinalNivel3_Calderon
                             Usuario usuario = (Usuario)Session["usuarioActivo"];
                             negocio.AgregarFavoritos(usuario.Id, idArticulo);
                             Response.Redirect("Default.aspx", false);
+
                         } else
                         {
                             Response.Redirect("Login.aspx", false);
