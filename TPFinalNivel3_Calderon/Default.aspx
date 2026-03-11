@@ -66,7 +66,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 d-flex justify-content-between align-items-center">
-                            <asp:CheckBox ID="chkFavorito" Text="Favorito" runat="server" />
+                            <a href='Default.aspx?id=<%: articulo.Id %>' class="btn btn-outline-light btn-sm">❤️</a>
                             <a href='DetalleArticulo.aspx?id=<%: articulo.Id %>' class="btn btn-primary btn-sm">Ver Detalle</a>
                         </div>
                     </div>

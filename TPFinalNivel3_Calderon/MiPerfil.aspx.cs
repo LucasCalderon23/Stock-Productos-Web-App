@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Infraestructura;
 
 namespace TPFinalNivel3_Calderon
 {
@@ -13,7 +14,20 @@ namespace TPFinalNivel3_Calderon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(!IsPostBack)
+            {
+                if (Seguridad.sesionActiva(Session["usuarioActivo"]))
+                {
+                    Usuario usuario = (Usuario)Session["usuarioActivo"];
+                    txtEmail.Text = usuario.Email;
+                    txtEmail.ReadOnly = true;
+                    txtNombre.Text = usuario.Nombre;
+                    txtApellido.Text = usuario.Apellido;
+                    if(string.IsNullOrEmpty(usuario.UrlImagen))
+                        imgPerfil.ImageUrl = "~/Images/" + usuario.UrlImagen;
+                }
+               
+            }
         }
 
         protected void btnLogOut_Click(object sender, EventArgs e)

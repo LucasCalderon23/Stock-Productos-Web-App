@@ -63,11 +63,11 @@ namespace Negocio
 		{
 			List<Articulos> lista = new List<Articulos>();
 			AccesoDatos datos = new AccesoDatos();
-			try
-			{
+            try
+            {
                 datos.setearProcedimiento("storedListar");
                 datos.ejecutarLectura();
-                while(datos.Lector.Read())
+                while (datos.Lector.Read())
                 {
                     Articulos aux = new Articulos();
                     aux.Id = (int)datos.Lector["Id"];
@@ -85,13 +85,17 @@ namespace Negocio
 
                     lista.Add(aux);
                 }
-                
+
                 return lista;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.cerrarConexion();            
+            }
 		}
 
 		public void Agregar(Articulos nuevo)
@@ -274,6 +278,78 @@ namespace Negocio
 
 				throw ex;
 			}
+        }
+
+        public void AgregarFavoritos(int IdUsuario, int IdArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into FAVORITOS (IdUser, IdArticulo) values (@IdUser, @IdArticulo)");
+                datos.setearParametros("@IdUser", IdUsuario);
+                datos.setearParametros("@IdArticulo", IdArticulo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public List<Articulos> ListarFavorito(int IdUsuario)
+        {
+            List<Articulos> lista = new List<Articulos>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select a.Id, Codigo, a.Nombre, a.Descripcion, a.IdMarca, m.Descripcion Marca, a.IdCategoria, c.Descripcion Categoria, ImagenUrl, Precio from ARTICULOS a, MARCAS m, CATEGORIAS c, FAVORITOS f where a.IdMarca = m.Id and a.IdCategoria = c.Id and a.Id = f.IdArticulo and f.IdUser = @IdUser");
+                datos.setearParametros("@IdUser", IdUsuario);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Articulos aux = new Articulos();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.UrlImagen = (string)datos.Lector["ImagenUrl"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void EliminarFavorito(int IdUsuario,int IdArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("delete from FAVORITOS where IdUser = @idUser and IdArticulo = @idArticulo");
+                datos.setearParametros("@idUser", IdUsuario);
+                datos.setearParametros("@idArticulo", IdArticulo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { datos.cerrarConexion(); }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TPFinalNivel3_Calderon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!(Page is Login) && !(Page is Default) && !(Page is RegistroUsuario))
+            if(!(Page is Login) && !(Page is Default) && !(Page is RegistroUsuario) && !(Page is Favoritos))
             {
                 if (!Seguridad.sesionActiva(Session["usuarioActivo"]))
                     Response.Redirect("Login.aspx", false);
