@@ -61,7 +61,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
         }
@@ -104,7 +104,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.asxp",false);
             }
         }
@@ -127,7 +127,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
         }

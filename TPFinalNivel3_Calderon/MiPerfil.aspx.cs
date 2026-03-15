@@ -14,19 +14,27 @@ namespace TPFinalNivel3_Calderon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            try
             {
-                if (Seguridad.sesionActiva(Session["usuarioActivo"]))
+                if (!IsPostBack)
                 {
-                    Usuario usuario = (Usuario)Session["usuarioActivo"];
-                    txtEmail.Text = usuario.Email;
-                    txtEmail.ReadOnly = true;
-                    txtNombre.Text = usuario.Nombre;
-                    txtApellido.Text = usuario.Apellido;
-                    if(string.IsNullOrEmpty(usuario.UrlImagen))
-                        imgPerfil.ImageUrl = "~/Images/" + usuario.UrlImagen;
+                    if (Seguridad.sesionActiva(Session["usuarioActivo"]))
+                    {
+                        Usuario usuario = (Usuario)Session["usuarioActivo"];
+                        txtEmail.Text = usuario.Email;
+                        txtEmail.ReadOnly = true;
+                        txtNombre.Text = usuario.Nombre;
+                        txtApellido.Text = usuario.Apellido;
+                        if (!string.IsNullOrEmpty(usuario.UrlImagen))
+                            imgPerfil.ImageUrl = "~/Images/" + usuario.UrlImagen;
+                    }
+
                 }
-               
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -41,23 +49,25 @@ namespace TPFinalNivel3_Calderon
             
             try
             {
-                UsuarioNegocio negocio = new UsuarioNegocio();
-                Usuario usuario = (Usuario)Session["usuarioActivo"];
-                //cargo la imagen y la guado
-                if(txtImagen.PostedFile.FileName != "")
-                {
-                    string ruta = Server.MapPath("./Images/");
-                    txtImagen.PostedFile.SaveAs(ruta + "Perfil-" + usuario.Id + ".jpg");
-                    usuario.UrlImagen = "Perfil-" + usuario.Id + ".jpg";
-                }
-                //cargo los demas datos
-                usuario.Nombre = txtNombre.Text;
-                usuario.Apellido = txtApellido.Text;
-                //actualizo los datos mediante el metodo de la clase usuarioNegocio
-                negocio.ActualizarDatos(usuario);
-                //leo la imagen para cargarla en el avatar de la barra de tareas
-                Image img = (Image)Master.FindControl("imgAvatar");
-                img.ImageUrl = "~/Images/" + usuario.UrlImagen;
+                    UsuarioNegocio negocio = new UsuarioNegocio();
+                    Usuario usuario = (Usuario)Session["usuarioActivo"];
+                    //cargo la imagen y la guado
+                    if (txtImagen.PostedFile.FileName != "")
+                    {
+                        string ruta = Server.MapPath("./Images/");
+                        txtImagen.PostedFile.SaveAs(ruta + "Perfil-" + usuario.Id + ".jpg");
+                        usuario.UrlImagen = "Perfil-" + usuario.Id + ".jpg";
+                    }
+                    //cargo los demas datos
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    //actualizo los datos mediante el metodo de la clase usuarioNegocio
+                    negocio.ActualizarDatos(usuario);
+                    //leo la imagen para cargarla en el avatar de la barra de tareas
+                    Image img = (Image)Master.FindControl("imgAvatar");
+                    img.ImageUrl = "~/Images/" + usuario.UrlImagen;
+                
+                
             }
             catch (Exception ex)
             {

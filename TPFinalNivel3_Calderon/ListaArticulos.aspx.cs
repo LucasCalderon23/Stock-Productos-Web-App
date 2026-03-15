@@ -29,7 +29,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
             
@@ -44,7 +44,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
             
@@ -63,37 +63,55 @@ namespace TPFinalNivel3_Calderon
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            List<Articulos> lista = (List<Articulos>)Session["listaArticulos"];
-            List<Articulos> listaFiltrada = lista.FindAll(x => 
-            x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
-            x.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
-            x.Marca.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
-            x.Categoria.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()));
-            dgvListaArticulos.DataSource = listaFiltrada;
-            dgvListaArticulos.DataBind();
+            try
+            {
+                List<Articulos> lista = (List<Articulos>)Session["listaArticulos"];
+                List<Articulos> listaFiltrada = lista.FindAll(x =>
+                x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
+                x.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
+                x.Marca.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()) ||
+                x.Categoria.Descripcion.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+                dgvListaArticulos.DataSource = listaFiltrada;
+                dgvListaArticulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+           
         }
 
         protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ddlCriterio.Items.Clear();
-            if (ddlCampo.SelectedItem.ToString() == "Nombre")
+            try
             {
-                ddlCriterio.Items.Add("Contiene");
-                ddlCriterio.Items.Add("Comienza con");
-                ddlCriterio.Items.Add("Termina con");
+                ddlCriterio.Items.Clear();
+                if (ddlCampo.SelectedItem.ToString() == "Nombre")
+                {
+                    ddlCriterio.Items.Add("Contiene");
+                    ddlCriterio.Items.Add("Comienza con");
+                    ddlCriterio.Items.Add("Termina con");
+                }
+                else if (ddlCampo.SelectedItem.ToString() == "Marca")
+                {
+                    ddlCriterio.Items.Add("Contiene");
+                    ddlCriterio.Items.Add("Comienza con");
+                    ddlCriterio.Items.Add("Termina con");
+                }
+                else
+                {
+                    ddlCriterio.Items.Add("Contiene");
+                    ddlCriterio.Items.Add("Comienza con");
+                    ddlCriterio.Items.Add("Termina con");
+                }
             }
-            else if (ddlCampo.SelectedItem.ToString() == "Marca")
+            catch (Exception ex)
             {
-                ddlCriterio.Items.Add("Contiene");
-                ddlCriterio.Items.Add("Comienza con");
-                ddlCriterio.Items.Add("Termina con");
+                Session.Add("Error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
-            else
-            {
-                ddlCriterio.Items.Add("Contiene");
-                ddlCriterio.Items.Add("Comienza con");
-                ddlCriterio.Items.Add("Termina con");
-            }
+            
         }
 
         protected void btnBuscarAvanzado_Click(object sender, EventArgs e)
@@ -108,7 +126,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
         }
@@ -123,7 +141,7 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
         }

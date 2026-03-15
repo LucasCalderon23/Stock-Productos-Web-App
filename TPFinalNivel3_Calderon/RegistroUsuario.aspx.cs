@@ -21,6 +21,12 @@ namespace TPFinalNivel3_Calderon
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid) 
+                {
+                    return;
+                }
+
                 Usuario user = new Usuario();
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 EmailService emailService = new EmailService();
@@ -37,8 +43,8 @@ namespace TPFinalNivel3_Calderon
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
     }

@@ -18,6 +18,11 @@ namespace TPFinalNivel3_Calderon
 
         protected void btnIngresar_Click(object sender, EventArgs e)
         {
+            Page.Validate();
+            if(!Page.IsValid)
+            {
+                return;
+            }
             Usuario usuario = new Usuario();
             UsuarioNegocio negocio = new UsuarioNegocio();
             try
